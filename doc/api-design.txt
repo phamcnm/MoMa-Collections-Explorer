@@ -1,0 +1,158 @@
+API design
+Minh Pham, Sam Nelson
+
+----- Search -----
+
+---- Search artists ---
+REQUEST: /artists
+Parameters:
+    artist_name={name} (optional, default none): (text) search string for the artist's full name
+    min_year={year} (optional, default none): (integer) lower boundary for artist's birth year
+    max_year={year} (optional, default none): (integer) upper boundary for artist's death year
+    gender={gender} (optional, default none): (text) the artist's gender
+    nationality={nationality} (optional, default none): (text) the artist's nationality
+RESPONSE: A JSON list of dictionaries, each of which represents an artist, filtered by several parameters. Each dictionary has the following fields:
+    artist_id -- (integer) unique identifier for artist
+    artist_name -- (text) the artist’s full name
+    birth_year -- (integer) the year the artist was born
+    death_year -- (integer) the year the artist was gone
+    gender -- (text) the artist's gender
+    nationality -- (text) the artist’s nationality
+
+
+--- Search artworks ---
+REQUEST: /artworks
+Parameters:
+    artwork_title={title} (optional, default none): (text) search string for the artwork title
+    min_year={year} (optional, default none): (integer) lower boundary for year created
+    max_year={year} (optional, default none): (integer) upper boundary for year created
+    medium={medium} (optional, default none): (text) search string for the artwork medium
+    min_height={height} (optional, default none): (integer) lower boundary for artwork height
+    max_height={height} (optional, default none): (integer) upper boundary for artwork height
+    min_width={height} (optional, default none): (integer) lower boundary for artwork width
+    max_width={height} (optional, default none): (integer) upper boundary for artwork width
+    min_year_acquired={year} (optional, default none): (integer) lower boundary for the year acquired
+    max_year_acquired={year} (optional, default none): (integer) upper boundary for the year acquired
+    classification={classification} (optional, default none): (text) the classification of the artworks
+    department={department} (optional, default none): (text) the department of the artworks
+
+RESPONSE: A JSON list of dictionaries, each of which represents an artwork. This list only contains artworks that are filtered by specified parameters from above. Each dictionary has the following fields, which are the fields that will be displayed by default:
+    artwork_title -- (text) the artwork’s title
+    artist_name -- (text) the artist’s full name
+    year_created -- (integer) the year the artwork was created
+
+
+--- Search both artists and artworks ---
+REQUEST: /artists/artworks
+    Executes /artists, then executes the same as /artworks but with the additional parameter artist_id, so that it only searches for artworks by the artists that were returned by the initial /artists search
+    artist_id={artist_id} (optional, default none): (integer) unique identifier for the artist. If search has also been conducted by artist, the artworks search function will only search through the works of the artists that were returned by that search.
+RESPONSE: A JSON list of dictionaries, each of which represents an artwork. This list only contains artworks that are filtered by specified parameters from above. Each dictionary has the following fields, which are the fields that will be displayed by default:
+    artwork_title -- (text) the artwork’s title
+    artist_name -- (text) the artist’s full name
+    year_created -- (integer) the year the artwork was created
+
+
+--- Sort and display the /artists searched results ---
+REQUEST: /artists?sort={artist_name|birth_year|death_year|gender|nationality}&display[]=[true|false]
+    sort (optional, default artist_name): the options are specified above. sort cannot take on more than one value
+    display[0] (optional, default false): type boolean; this specifies whether the artist’s nationality would be displayed on screen
+    display[1] (optional, default false): type boolean; this specifies whether the artist's gender would be displayed on screen
+
+RESPONSE: A JSON list of dictionaries, each of which represents an artist, filtered by specified parameters. Each dictionary has these fields:
+    artist_name -- (text) the artist’s full name
+    artist_year -- (text) the years the artist was alive
+Depending on the true/false value of the parameter display[], it may also have any of these following fields:
+    nationality -- (text) the artist’s nationality
+    gender -- (text) the artist's gender
+
+
+--- Sort and display the /artworks (and /artists/artworks) searched results ---
+REQUEST: /artworks?sort={artwork_name|artist_name|year_created|artist_birth|artist_death|classification|department|year_acquired}&display[]=[true|false]
+    sort (optional, default artwork_name): the options are specified above. sort cannot take on more than one value
+    display[0] (optional, default false): type boolean; this specifies whether the artist’s nationality would be displayed on screen
+    display[1] (optional, default false): type boolean; this specifies whether the artist's gender would be displayed on screen
+    display[2] (optional, default false): type boolean; this specifies whether the artist's birth and death years would be displayed on screen
+    display[3] (optional, default false): type boolean; this specifies whether the medium of the artwork is displayed on screen
+    display[4] (optional, default false): type boolean; this specifies whether the dimensions of the artwork are displayed on screen
+    display[5] (optional, default false): type boolean; this specifies whether the year the artwork was acquired is displayed on screen
+    display[6] (optional, default false): type boolean; this specifies whether the classification of the artwork would be displayed on screen
+    display[7] (optional, default false): type boolean; this specifies whether the department of the artwork would be displayed on screen
+
+RESPONSE: A JSON list of dictionaries, each of which represents an artwork, filtered by specified parameters. Each dictionary has these fields:
+    artwork_title -- (text) the artwork’s title
+    artist_name -- (text) the artist’s full name
+    year_created -- (integer) the year the artwork was created
+Depending on the true/false value of the parameter display[], it may also have any of these following fields:
+    nationality -- (text) the artist's nationality
+    gender -- (text) the artist's gender
+    artist_years -- (text) the artist's birth and death years
+    medium -- (text) the medium of the artwork
+    dimensions -- (text) the dimensions of the artwork
+    year_acquired -- (integer) the year, or the estimated year range the artwork was acquired
+    classification -- (text) the artwork’s classification
+    department -- (text) the artwork’s department
+
+
+----- Artist and artwork pages -----
+
+-- Print out detailed information of an artist ---
+REQUEST: /artists/{artist-id}
+RESPONSE: a JSON dictionary representing a single artist, with the following fields:
+    artist_name -- (text) the artist’s full name
+    birth_year -- (integer) the year the artist was born
+    death_year -- (integer) the year the artist was gone
+    gender -- (text) the artist's gender
+    nationality -- (text) the artist’s nationality
+    artworks -- (dictionaries) the list of all the artworks created by this artist. Each of these nested dictionaries will contain the following fields:
+    artwork_id -- (integer) unique identifier for the artwork
+    artwork_title -- (text) the artwork’s title
+    year -- (integer) the year the artwork was created
+
+
+--- Print out detailed information of an artwork ---
+REQUEST: /{artwork-id}
+RESPONSE: A JSON dictionary representing a single artwork, with the following fields:
+    artwork_title -- (text) the artwork’s title
+    artist_id -- (integer) unique identifier for the artist
+    artist_name -- (text) the artist’s full name
+    year_created -- (integer) the year the artwork was created
+    medium -- (text) the medium(s) of the artwork
+    dimensions -- (text) the dimensions of the artwork, for displaying
+    height -- (float) the height of the artwork in cm
+    width -- (float) the width of the artwork in cm
+    credit_line -- (text) crediting who gave the artwork to the MoMA
+    classification -- (text) the artwork’s classification
+    department -- (text) the artwork’s department
+    year_acquired -- (integer) the year, or the estimated year range the artwork was acquired
+    lookup_id -- (int) ID of the artwork, to link to its entry in MoMA’s website (add to end of URL)
+    coverage -- (dictionary) a nested dictionary, containing some surfaces and their areas in cm3 {key = surface (string), value = area (int)}
+
+
+--- Visualizations ---
+
+Visualize male:female artists
+REQUEST: /visualize/artist_gender?min_year={min_year}&max_year={max_year}&nationality={nationality}
+Parameters:
+    min_year={year} (optional, default none): (integer) lower boundary for artists’ birth years.
+    max_year={year} (optional, default none): (integer) upper boundary for artists’ birth years.
+    nationality={nationality} (optional, default none): (string) the nationality of the artists.
+RESPONSE: A JSON string that is the url of an html file that shows the graph of the male to female ratio over time.
+
+
+Visualize artwork size
+REQUEST: /visualize/artworks_size?min_year={min_year}&max_year={max_year}&nationality={nationality}
+Parameters:
+    min_year={min_year} (optional, default none): (integer) lower boundary for artwork year_created.
+    max_year={max_year} (optional, default none): (integer) upper boundary for artwork year_created.
+    nationality={nationality} (optional, default none): (string) the artist's nationality, display as a dropdown list.
+RESPONSE: A JSON string that is the url of an html file that shows the graph of the male to female ratio over time.
+
+
+Visualize use of medium
+REQUEST: /visualize/mediums?medium={medium}&min_year={min_year}&max_year={max_year}&nationality={nationality}
+Parameters:
+    medium={medium} (optional, default crayon): (string) search string (or perhaps a dropdown list of search strings?) for artwork medium
+    min_year={min_year} (optional, default none): (integer) lower boundary for artwork year_created.
+    max_year={max_year} (optional, default none): (integer) upper boundary for artwork year_created.
+    nationality={nationality} (optional, default none): (string) the artist's nationality, display as a dropdown list
+RESPONSE: A JSON string that is the url of an html file that shows the graph of medium use over time.

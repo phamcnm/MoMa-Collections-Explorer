@@ -1,0 +1,104 @@
+:root {
+    --blue: #00aab3;
+    --yellow: #feb41e;
+    --pink: #ff4e70;
+    --gray: #a0a0a0;
+}
+
+h1 {
+  font-size: 30pt;
+  text-align: center;
+}
+
+h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+h2 {
+  font-size: 16pt;
+}
+
+body {
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white
+}
+
+ul.navbar li {
+    float: left;
+    background-color: var(--yellow)
+}
+
+.column2 {
+    float: left;
+    width: 100%;
+}
+
+ul.navbar li a {
+    display: block;
+    color: black;
+    text-align: center;
+    vertical-align: baseline;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.navbar li a:hover {
+    background-color: var(--blue);
+    color: white;
+}
+
+button {
+    display:inline-block;
+}
+
+#Go {
+    display: block;
+    width: 50%;
+    border: none;
+    background-color: var(--blue);
+    color: white;
+    padding: 8px 10px;
+    cursor: pointer;
+
+}
+
+#Gender {
+    width: 30%;
+    border: none;
+    background-color: var(--yellow);
+    color: white;
+    padding: 50px 3px;
+    cursor: pointer;
+}
+
+#Size {
+    width: 30%;
+    border: none;
+    background-color: var(--blue);
+    color: white;
+    padding: 50px 3px;
+    cursor: pointer;
+}
+
+#Medium {
+    width: 30%;
+    border: none;
+    background-color: var(--pink);
+    color: white;
+    padding: 50px 3px;
+    cursor: pointer;
+}
+
+

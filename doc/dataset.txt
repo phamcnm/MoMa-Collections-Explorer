@@ -1,0 +1,74 @@
+User stories and database design
+Minh Pham, Sam Nelson
+
+----- Dataset description -----
+A list of all artworks and artists in MOMA’s collection. Artwork fields include date, medium and dimensions. Artist fields include nationality, gender, years, and a short biography.
+Link to dataset: https://data.world/moma/collection
+
+---- SQL create statements -----
+
+CREATE TABLE artists (
+    artist_id INT,
+    name TEXT,
+    birth_year INT,
+    death_year INT,
+    gender TEXT,
+    nationality TEXT,
+    artist_bio TEXT,
+);
+- artist_id not serial as there are gaps in the data
+
+CREATE TABLE artworks (
+    artwork_id INT,
+    title TEXT,
+    artist_id INT,
+    date INT,
+    medium TEXT,
+    dimensions TEXT,
+    height FLOAT,
+    width FLOAT,
+    credit_line TEXT,
+    classification TEXT,
+    department TEXT,
+    date_acquired DATETIME,
+    lookup_id INT
+);
+- date may have to be stored as text because some are stored in different formats (e.g. 1977-78, 1977-1978, c. 1977)
+- object_id not serial as there are gaps in the data
+
+CREATE TABLE artworks_artists (
+    book_id integer,
+    author_id integer
+);
+
+
+----- Notes on design ------
+
+- For every search function, we want to be able to specify the type of artwork e.g. painting, sculpture. To do this and allow other functions, we should allow search parameters to be combined.
+- When you click on an artwork name, it will take you to a page that displays all the information about the artwork.
+- When you click on an artist name, it will take you to a page that displays all the information about the artist and a list of artworks by the artist sorted by date.
+
+
+----- User stories -----
+
+-- Search functions --
+
+STORY: As an art enthusiast, I can use search functions that can be combined. E.g.: get a list of artists alive and artworks created in a given (range of) years, sorted by year or [artist/artwork] name; get a list of artists of a given nationality, sorted by name or year; get a list of artworks that use a given material.
+IMPLEMENTATION: We can search the database with conditions (using the WHERE statement) and allow search parameters to be combined (using AND). When we print out the results, we can have an option to print few or many details.
+
+STORY: As a person visiting the MOMA, I can get the location of an artwork or of an artist’s artworks.
+IMPLEMENTATION: Return the classification and department of an artwork. We ambitiously hope to be able to plot this on a map of the MOMA or at least tell you the floor it is on, but if this proves too complicated then we might just merge this (classification/department) as an option within the previous search function or artwork page.
+
+STORY: As an art enthusiast, I can find out how many of a given artwork I would need to cover: a football pitch (Minh is making fun of me for saying pitch instead of field), the world ...
+IMPLEMENTATION: We can search the database with conditions (using the WHERE statement). The input will be the name of the artworks. We will then implement basic math and print out the results. We want to include this option as part of the individual artwork page.
+
+-- Visualizations --
+
+STORY: As an art enthusiast, I can visualize the ratio of male:female artists over time (plot them against each other). Perhaps allow refining by different locations.
+IMPLEMENTATION: We can iterate through the whole database, storing both the number of male artists, and the number of female artists as values of a dictionary, whose keys are the years. Then, plot a graph of male and female numbers.
+
+STORY: As an art enthusiast, I can visualize a plot of the average (dimension) areas of the artworks over time and in different locations (and possibly by other fields) to see if there are any interesting trends.
+IMPLEMENTATION: We can iterate through the whole database, storing the total areas of the artworks and the number of artworks as values of a dictionary, whose keys are the years. Then, when we create the diagram, we will plot the area. If this does not have any interesting trends we might exclude it.
+
+STORY: As an art enthusiast, I can visualize the use of a given medium over time to see if there are any interesting trends, and get a list of artworks using them (useful for strange mediums such as forks).
+IMPLEMENTATION: We can use a 2D array to store the use of a given medium over time. The rows are the mediums, and the columns are the years. We will implement a systematic way to keep track of which row/column refers to what. This way, we can just iterate through the database twice (the first time is to generate the arrays by figuring out how many columns and rows we need and the labels for them).

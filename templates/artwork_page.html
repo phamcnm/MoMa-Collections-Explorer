@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webapp.css') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <title>MoMA Searcher</title>
+</head>
+
+<body>
+    <h1><a href="index.html">MoMA Searcher</a></h1>
+
+	<ul class="navbar">
+		<li><a href="index.html#search">SEARCH</a></li>
+		<li><a href="index.html#visualize">VISUALIZE</a></li>
+	</ul>
+
+    <h2 id="artwork-title"></h2>
+
+    <h3>Year</h3>
+    <p id="artwork-year"></p>
+
+    <h3>Artist</h3>
+    <p id="artist-name"></p>
+    <!-- Display artistS if multiple? -->
+
+    <h3>Medium</h3>
+    <p id="medium"></p>
+
+    <h3>Credit line</h3>
+    <p id="credit-line"></p>
+
+    <h3>Classification</h3>
+    <p id="classification"></p>
+    <h3>Department</h3>
+    <p id="department"></p>
+
+    <p id="moma-link"</p>
+
+    <!-- Area thingy -->
+
+</body>
+</html>

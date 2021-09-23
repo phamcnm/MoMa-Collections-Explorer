@@ -1,0 +1,253 @@
+:root {
+    --cream: #f2e7d5;
+    --lgreen: #abb493;
+    --dgreen: #697362;
+    --beige: #d2b072;
+    --dbeige: #856f48;
+    --gray: #78807d;
+    --dgray: #4a4f4d
+}
+
+body {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--cream);
+    font-family: "Avenir Next";
+    font-size: 12pt;
+}
+
+h1 {
+    font-size: 30pt;
+    text-align: center;
+}
+
+h1 a {
+    color: black;
+    text-decoration: none;
+}
+
+h2 {
+    font-size: 16pt;
+}
+
+h3 {
+    font-size: 12pt;
+}
+
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.column-fullwidth {
+    float: left;
+    width: 100%;
+}
+
+.vertical-line {
+    border-right: 1px solid var(--gray);
+    height: 250px;
+    position: absolute;
+    left: 48%;
+    margin-left: -3px;
+    top: 260px;
+}
+
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+}
+
+ul.navbar li {
+    float: left;
+    width: 50%;
+    background-color: var(--lgreen);
+}
+
+ul.navbar li a {
+    display: block;
+    color: black;
+    text-align: center;
+    vertical-align: baseline;
+    padding: 14px;
+    text-decoration: none;
+}
+
+ul.navbar li a:hover {
+    color: white;
+    background-color: var(--dgreen);
+    transition-duration: 0.3s;
+}
+
+
+input {
+    background-color: var(--cream);
+    border: none;
+    border-bottom: 1px solid gray;
+    outline: none;
+    padding: 2pt;
+    color: var(--dgreen);
+}
+input[type=text] { width: 30%; }
+input[type=number] { width: 45px; }
+
+select /* dropdown */ {
+    background-color: var(--cream);
+    color: var(--dgreen); /* of arrow */
+    border-color: gray; /* of box */
+    outline: none;
+}
+
+button {
+    display:block;
+    float: left;
+    border: none;
+}
+
+#search-artworks-button {
+    width: 65%;
+    outline-color: var(--dgreen);
+    background-color: var(--lgreen);
+    color: black;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+#search-artworks-button:hover {
+    background-color: var(--dgreen);
+    color: white;
+    transition-duration: 0.2s;
+}
+
+#search-artists-button {
+    width: 65%;
+    outline-color: var(--dgreen);
+    background-color: var(--lgreen);
+    color: black;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+#search-artists-button:hover {
+    background-color: var(--dgreen);
+    color: white;
+    transition-duration: 0.2s;
+}
+
+#clear-artworks-button {
+    width: 25%;
+    outline-color: var(--dbeige);
+    background-color: var(--beige);
+    color: black;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+#clear-artworks-button:hover {
+    background-color: var(--dbeige);
+    color: white;
+    transition-duration: 0.2s;
+}
+
+#clear-artists-button {
+    width: 25%;
+    outline-color: var(--dbeige);
+    background-color: var(--beige);
+    color: black;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+#clear-artists-button:hover {
+    background-color: var(--dbeige);
+    color: white;
+    transition-duration: 0.2s;
+}
+
+#advanced-artworks-button {
+    width: 90%;
+    outline-color: var(--dgray);
+    background-color: var(--gray);
+    color: white;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+#advanced-artworks-button:hover {
+    background-color: var(--dgray);
+    color: white;
+    transition-duration: 0.2s;
+}
+
+#advanced-artists-button {
+    width: 90%;
+    outline-color: var(--dgray);
+    background-color: var(--gray);
+    color: white;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+#advanced-artists-button:hover {
+    background-color: var(--dgray);
+    color: white;
+    transition-duration: 0.2s;
+}
+
+#clear-results-button {
+    width: 30%;
+    outline-color: var(--dbeige);
+    background-color: var(--beige);
+    color: black;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+#clear-results-button:hover {
+    background-color: var(--dbeige);
+    color: white;
+    transition-duration: 0.2s;
+}
+
+
+
+.visualize-box {
+    width: 100%;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 20px;
+}
+#Gender { background-color: var(--dgreen); }
+
+
+.chart-container {
+    display: inline-block;
+    border: 2px dashed var(--beige);
+    width: 100%;
+    padding-bottom: 50px;
+}
+
+.chart-container .ct-bar {
+    stroke: #11aa11;
+    fill: #11aa11;
+    stroke-width: 5px;
+}
+
+/* Fix x-axis labels. https://stackoverflow.com/questions/40762182/chartist-js-rotate-labels-on-x-axis/42666530 */
+svg.ct-chart-bar, svg.ct-chart-line{
+    overflow: visible;
+}
+
+.ct-label.ct-label.ct-horizontal.ct-end {
+    position: relative;
+    justify-content: flex-end;
+    text-align: right;
+    transform-origin: 100% 0;
+    transform: translate(-100%) rotate(-75deg);
+    white-space:nowrap;
+}

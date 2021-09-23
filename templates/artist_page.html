@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webapp.css') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <title>MoMA Searcher</title>
+</head>
+
+<body>
+    <h1><a href="index.html">MoMA Searcher</a></h1>
+
+	<ul class="navbar">
+		<li><a href="index.html#search">SEARCH</a></li>
+		<li><a href="index.html#visualize">VISUALIZE</a></li>
+	</ul>
+
+    <h2 id="artist-name"></h2>
+    <p id="artist-years"></p>
+
+    <h3>Nationality</h3>
+    <p id="nationality"></p>
+    <h3>Gender</h3>
+    <p id="gender"></p>
+
+    <h3>Artworks by this artist</h3>
+    <ul id="artworks-list-by-artist"></ul>
+
+</body>
+</html>

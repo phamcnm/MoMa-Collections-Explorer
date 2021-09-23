@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="webapp.css") }}" />
+    <script type="text/javascript" src="{{ url_for("static", filename="webapp.js") }}"></script>
+    <link rel="shortcut icon" href="{{ url_for("static", filename="favicon.ico") }}" />
+    <title>MoMA Searcher</title>
+</head>
+
+<body>
+    <h1><a href="index.html">MoMA Searcher</a></h1>
+
+	<ul class="navbar">
+		<li><a href="index.html#search">SEARCH</a></li>
+		<li><a href="index.html#visualize">VISUALIZE</a></li>
+	</ul>
+
+    <form>
+        <div class="column">
+            <h3>Display</h3>
+            <!-- Artist: nationality, gender -->
+            <!-- Artwork: nationality, gender, artist_years, medium, dimensions, year_acquired, classification, department -->
+            <input type="checkbox" id="display-nationality" name="display-nationality" value="nationality">
+            <label for="display-nationality">Nationality</label><br>
+            <input type="checkbox" id="display-gender" name="display-gender" value="gender">
+            <label for="display-gender">Gender</label><br>
+
+            <!-- if we split artwork_results and artist_results pages, these will only be on artwork_results -->
+            <input type="checkbox" id="display-artist-years" name="display-artist-years" value="artist-years">
+            <label for="display-artist-years">Artist birth/death years</label><br>
+            <input type="checkbox" id="display-medium" name="display-medium" value="medium">
+            <label for="display-medium">Medium</label><br>
+            <input type="checkbox" id="display-dimensions" name="display-dimensions" value="dimensions">
+            <label for="display-dimensions">Dimensions</label><br>
+            <input type="checkbox" id="display-year-acquired" name="display-year-acquired" value="year-acquired">
+            <label for="display-year-acquired">Year acquired</label><br>
+            <input type="checkbox" id="display-classification" name="display-classification" value="classification">
+            <label for="display-classification">Classification</label><br>
+            <input type="checkbox" id="display-department" name="display-department" value="department">
+            <label for="display-department">Department</label><br>
+        </div>
+        <div class="column">
+            <h3>Sort</h3>
+            <!--artwork_name|artist_name|year_created|artist_birth|artist_death|classification|department|year_acquired -->
+            <label for="sort">Sort results by: </label>
+            <select name="sort">
+                <option value=0>Artist name</option>
+                <option value=1>Artwork name</option>
+                <option value=2>Year created</option>
+                <option value=3>Artist birth year</option>
+                <option value=4>Artist death year</option>
+                <option value=5>Classification</option>
+                <option value=6>Department</option>
+                <option value=7>Year acquired</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="column-fullwidth">
+        <h2>Results</h2>
+        <div id="searched-results"></div>
+
+        <script>
+            const resultsList = document.getElementById("searched-results")
+            new URLSearchParams(window.location.search).forEach((value,name) => {
+                resultsList.append(`${name}: ${value}`)
+                resultsList.append(document.createElement("br"))
+            })
+        </script>
+
+
+    </div>
+
+</body>
+</html>

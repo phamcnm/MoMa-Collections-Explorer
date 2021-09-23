@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webapp.css') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <title>MoMA Searcher</title>
+</head>
+
+<body>
+    <h1><a href="index.html">MoMA Searcher</a></h1>
+
+    <ul class="navbar">
+        <li><a href="#search">SEARCH</a></li>
+        <li><a href="#visualize">VISUALIZE</a></li>
+    </ul>
+
+    <h2><a name="search">Search</h2>
+    <!-- Artworks -->
+    <div class="column">
+        <h3>Artworks</h3>
+
+        <label for="artwork-title">Artwork title:</label>
+        <input type="text" name="artwork-title" id="artwork-title"><br>
+
+        <label for="artwork-minyear">Year:</label>
+        <input type="number" name="artwork-minyear" id="artwork-minyear" min="0" max="2020" step="20">
+        <label for="artwork-maxyear">to</label>
+        <input type="number" name="artwork-maxyear" id="artwork-maxyear" min="1760" max="9999" step="20"><br>
+
+        <label for="minheight">Height (cm):</label>
+        <input type="number" name="minheight" id="minheight" min="0">
+        <label for="maxheight">to</label>
+        <input type="number" name="maxheight" id="maxheight" min="0"><br>
+
+        <label for="minwidth">Width (cm):</label>
+        <input type="number" name="minwidth" id="minwidth" min="0">
+        <label for="maxwidth">to</label>
+        <input type="number" name="maxwidth" id="maxwidth" min="0"><br>
+
+        <label for="classification">Classification:</label>
+        <select name="classifications-select" id="classification">
+            <option value=''></option>
+            <option value=1>Architecture</option>
+            <option value=2>Audio</option>
+            <option value=3>Collage</option>
+            <option value=4>Design</option>
+            <option value=5>Ephemera</option>
+            <option value=6>Film</option>
+            <option value=7>Film (object)</option>
+            <option value=8>Frank Lloyd Wright Archive</option>
+            <option value=9>Furniture and Interiors</option>
+            <option value=10>Graphic Design</option>
+            <option value=11>Illustrated Book</option>
+            <option value=12>Installation</option>
+            <option value=13>Media</option>
+            <option value=14>Mies van der Rohe Archive</option>
+            <option value=15>Multiple</option>
+            <option value=16>Painting</option>
+            <option value=17>Performance</option>
+            <option value=18>Periodical</option>
+            <option value=19>Photograph</option>
+            <option value=20>Photography Research/Reference</option>
+            <option value=21>Poster</option>
+            <option value=22>Print</option>
+            <option value=23>Product Design</option>
+            <option value=24>Sculpture</option>
+            <option value=25>Software</option>
+            <option value=26>Textile</option>
+            <option value=27>Video</option>
+            <option value=28>Work on Paper</option>
+        </select><br>
+
+        <br>
+        <button id="search-artworks-button">Search Artworks</button>
+        <button id="clear-artworks-button">Clear</button><br>
+        <br>
+        <div class="vertical-line"></div>
+
+        <!-- Advanced -->
+        <button id="advanced-artworks-button">Open advanced sort/display options</button>
+        <div id="advanced-options-artworks" style="display:none;">
+            <div class="column">
+                <h3>Display</h3>
+                <input type="checkbox" id="display-artist" name="display-artist" checked>
+                <label for="display-artist">Artist</label><br>
+                <input type="checkbox" id="display-dimensions" name="display-dimensions">
+                <label for="display-dimensions">Dimensions</label><br>
+                <input type="checkbox" id="display-year-acquired" name="display-year-acquired">
+                <label for="display-year-acquired">Year acquired</label><br>
+                <input type="checkbox" id="display-classification" name="display-classification" checked>
+                <label for="display-classification">Classification</label><br>
+            </div>
+            <div class="column">
+                <h3>Sort</h3>
+                <label for="sort-artwork">Sort results by: </label>
+                <select name="sort-artwork" id="sort-artworks">
+                    <option value=0>Artwork name (default)</option>
+                    <option value=1>Year created</option>
+                </select><br>
+                <br>
+                <h3>Limit</h3>
+                <label for="limit">Display limit: </label>
+                <select name="limit" id="limit-artworks">
+                    <option value=10>10 (default)</option>
+                    <option value=20>20</option>
+                    <option value=30>30</option>
+                    <option value=40>40</option>
+                </select>
+                </div>
+        </div>
+    </div>
+
+    <!-- Artists -->
+    <div class="column">
+        <h3>Artists</h3>
+        <label for="artist-name">Artist name:</label>
+        <input type="text" name="artist-name" id="artist-name"><br>
+
+        <label for="artist-minyear">Year:</label>
+        <input type="number" name="artist-minyear" id="artist-minyear" min="1500" max="2020" step="20">
+        <label for="artist-maxyear">to</label>
+        <input type="number" name="artist-maxyear" id="artist-maxyear" min="1500" max="9999" step="20"><br>
+
+        <label for="gender">Gender:</label>
+        <select name="genders-select" id="gender">
+            <option value=''></option>
+            <option value=1>Female</option>
+            <option value=2>Male</option>
+        </select><br>
+
+        <label for="nationality">Nationality:</label>
+        <select name="nationalities-select" id="nationality">
+            <option value=''></option>
+            <option value=1>Afghan</option>
+            <option value=2>Albanian</option>
+            <option value=3>Algerian</option>
+            <option value=4>American</option>
+            <option value=5>Angolan</option>
+            <option value=6>Argentine</option>
+            <option value=7>Australian</option>
+            <option value=8>Austrian</option>
+            <option value=9>Azerbaijani</option>
+            <option value=10>Bahamian</option>
+            <option value=11>Belgian</option>
+            <option value=12>Bolivian</option>
+            <option value=13>Bosnian</option>
+            <option value=14>Brazilian</option>
+            <option value=15>British</option>
+            <option value=16>Bulgarian</option>
+            <option value=17>Burkinabe</option>
+            <option value=18>Cambodian</option>
+            <option value=19>Cameroonian</option>
+            <option value=20>Canadian</option>
+            <option value=21>Canadian Inuit</option>
+            <option value=22>Catalan</option>
+            <option value=23>Chilean</option>
+            <option value=24>Chinese</option>
+            <option value=25>Colombian</option>
+            <option value=26>Congolese</option>
+            <option value=27>Costa Rican</option>
+            <option value=28>Croatian</option>
+            <option value=29>Cuban</option>
+            <option value=30>Cypriot</option>
+            <option value=31>Czech</option>
+            <option value=32>Czechoslovakian</option>
+            <option value=33>Danish</option>
+            <option value=34>Dutch</option>
+            <option value=35>Ecuadorian</option>
+            <option value=36>Egyptian</option>
+            <option value=37>Emirati</option>
+            <option value=38>English</option>
+            <option value=39>Estonian</option>
+            <option value=40>Ethiopian</option>
+            <option value=41>Filipino</option>
+            <option value=42>Finnish</option>
+            <option value=43>French</option>
+            <option value=44>Georgian</option>
+            <option value=45>German</option>
+            <option value=46>Ghanaian</option>
+            <option value=47>Greek</option>
+            <option value=48>Guatemalan</option>
+            <option value=49>Guyanese</option>
+            <option value=50>Haitian</option>
+            <option value=51>Hungarian</option>
+            <option value=52>Icelandic</option>
+            <option value=53>Indian</option>
+            <option value=54>Indonesian</option>
+            <option value=55>Iranian</option>
+            <option value=56>Iraqi</option>
+            <option value=57>Irish</option>
+            <option value=58>Israeli</option>
+            <option value=59>Italian</option>
+            <option value=60>Ivorian</option>
+            <option value=61>Japanese</option>
+            <option value=62>Kazakhstani</option>
+            <option value=63>Kenyan</option>
+            <option value=64>Korean</option>
+            <option value=65>Kuwaiti</option>
+            <option value=66>Kyrgyzstani</option>
+            <option value=67>Latvian</option>
+            <option value=68>Lebanese</option>
+            <option value=69>Lithuanian</option>
+            <option value=70>Luxembourgish</option>
+            <option value=71>Macedonian</option>
+            <option value=72>Malaysian</option>
+            <option value=73>Malian</option>
+            <option value=74>Mauritanian</option>
+            <option value=75>Mexican</option>
+            <option value=76>Moroccan</option>
+            <option value=77>Mozambican</option>
+            <option value=78>Namibian</option>
+            <option value=79>Native American</option>
+            <option value=80>New Zealander</option>
+            <option value=81>Nicaraguan</option>
+            <option value=82>Nigerian</option>
+            <option value=83>Norwegian</option>
+            <option value=84>Pakistani</option>
+            <option value=85>Palestinian</option>
+            <option value=86>Panamanian</option>
+            <option value=87>Paraguayan</option>
+            <option value=88>Peruvian</option>
+            <option value=89>Polish</option>
+            <option value=90>Portuguese</option>
+            <option value=91>Puerto Rican</option>
+            <option value=92>Romanian</option>
+            <option value=93>Russian</option>
+            <option value=94>Rwandan</option>
+            <option value=95>Sahrawi</option>
+            <option value=96>Saudi Arabian</option>
+            <option value=97>Scottish</option>
+            <option value=98>Senegalese</option>
+            <option value=99>Serbian</option>
+            <option value=100>Singaporean</option>
+            <option value=101>Slovak</option>
+            <option value=102>Slovenian</option>
+            <option value=103>South African</option>
+            <option value=104>Spanish</option>
+            <option value=105>Sudanese</option>
+            <option value=106>Swedish</option>
+            <option value=107>Swiss</option>
+            <option value=108>Syrian</option>
+            <option value=109>Taiwanese</option>
+            <option value=110>Tajik</option>
+            <option value=111>Tanzanian</option>
+            <option value=112>Thai</option>
+            <option value=113>Tunisian</option>
+            <option value=114>Turkish</option>
+            <option value=115>Ugandan</option>
+            <option value=116>Ukrainian</option>
+            <option value=117>Uruguayan</option>
+            <option value=118>Various</option>
+            <option value=119>Venezuelan</option>
+            <option value=120>Vietnamese</option>
+            <option value=121>Welsh</option>
+            <option value=122>Yugoslav</option>
+            <option value=123>Zimbabwean</option>
+        </select><br>
+        <br>
+        <button id="search-artists-button">Search Artists</button>
+        <button id="clear-artists-button">Clear</button><br>
+        <br>
+
+        <!-- Advanced -->
+        <button id="advanced-artists-button">Open advanced sort/display options</button>
+        <div id="advanced-options-artists" style="display:none;">
+            <div class="column">
+            <h3>Display</h3>
+            <input type="checkbox" id="display-nationality" name="display-nationality" checked>
+            <label for="display-nationality">Nationality</label><br>
+            <input type="checkbox" id="display-gender" name="display-gender" checked>
+            <label for="display-gender">Gender</label><br>
+            <input type="checkbox" id="display-birth-year" name="display-birth-year" checked>
+            <label for="display-birth-year">Birth Year</label><br>
+            <input type="checkbox" id="display-death-year" name="display-death-year" checked>
+            <label for="display-death-year">Death Year</label><br>
+        </div>
+        <div class="column">
+            <h3>Sort</h3>
+            <label for="sort-artists">Sort results by: </label>
+            <select name="sort-artists" id="sort-artists">
+                <option value=0>Artist name (default)</option>
+                <option value=1>Artist birth year</option>
+                <option value=2>Artist death year</option>
+                <option value=3>Nationality</option>
+            </select><br>
+            <br>
+
+            <h3>Limit</h3>
+            <label for="limit">Display limit: </label>
+            <select name="limit" id="limit-artists">
+                <option value=10>10 (default)</option>
+                <option value=20>20</option>
+                <option value=30>30</option>
+                <option value=40>40</option>
+            </select>
+        </div>
+        </div>
+    </div>
+
+    <div class="column-fullwidth">
+        <br>
+        <button id="clear-results-button" style="display:none;">Clear Results</button><br>
+        <p id="num-results"></p>
+        <ul id="results"></ul><br>
+
+        <h2><a name="visualize">Visualize</h2>
+
+            <button class="visualize-box" id="Gender">Male:Female artists over time</button><br>
+            <div class="chart-container">
+                <div class="ct-chart ct-perfect-fourth" id="visualize-gender-chart"></div>
+                <br><br><br><br><br><br><br><br><br>
+            </div>
+
+            <label for="visualize-nationalities-select">Nationality:</label>
+            <select name="visualize-nationalities-select" id="visualize-nationalities-select">
+                <option value=1>Afghan</option>
+                <option value=2>Albanian</option>
+                <option value=3>Algerian</option>
+                <option value=4>American</option>
+                <option value=5>Angolan</option>
+                <option value=6>Argentine</option>
+                <option value=7>Australian</option>
+                <option value=8>Austrian</option>
+                <option value=9>Azerbaijani</option>
+                <option value=10>Bahamian</option>
+                <option value=11>Belgian</option>
+                <option value=12>Bolivian</option>
+                <option value=13>Bosnian</option>
+                <option value=14>Brazilian</option>
+                <option value=15>British</option>
+                <option value=16>Bulgarian</option>
+                <option value=17>Burkinabe</option>
+                <option value=18>Cambodian</option>
+                <option value=19>Cameroonian</option>
+                <option value=20>Canadian</option>
+                <option value=21>Canadian Inuit</option>
+                <option value=22>Catalan</option>
+                <option value=23>Chilean</option>
+                <option value=24>Chinese</option>
+                <option value=25>Colombian</option>
+                <option value=26>Congolese</option>
+                <option value=27>Costa Rican</option>
+                <option value=28>Croatian</option>
+                <option value=29>Cuban</option>
+                <option value=30>Cypriot</option>
+                <option value=31>Czech</option>
+                <option value=32>Czechoslovakian</option>
+                <option value=33>Danish</option>
+                <option value=34>Dutch</option>
+                <option value=35>Ecuadorian</option>
+                <option value=36>Egyptian</option>
+                <option value=37>Emirati</option>
+                <option value=38>English</option>
+                <option value=39>Estonian</option>
+                <option value=40>Ethiopian</option>
+                <option value=41>Filipino</option>
+                <option value=42>Finnish</option>
+                <option value=43>French</option>
+                <option value=44>Georgian</option>
+                <option value=45>German</option>
+                <option value=46>Ghanaian</option>
+                <option value=47>Greek</option>
+                <option value=48>Guatemalan</option>
+                <option value=49>Guyanese</option>
+                <option value=50>Haitian</option>
+                <option value=51>Hungarian</option>
+                <option value=52>Icelandic</option>
+                <option value=53>Indian</option>
+                <option value=54>Indonesian</option>
+                <option value=55>Iranian</option>
+                <option value=56>Iraqi</option>
+                <option value=57>Irish</option>
+                <option value=58>Israeli</option>
+                <option value=59>Italian</option>
+                <option value=60>Ivorian</option>
+                <option value=61>Japanese</option>
+                <option value=62>Kazakhstani</option>
+                <option value=63>Kenyan</option>
+                <option value=64>Korean</option>
+                <option value=65>Kuwaiti</option>
+                <option value=66>Kyrgyzstani</option>
+                <option value=67>Latvian</option>
+                <option value=68>Lebanese</option>
+                <option value=69>Lithuanian</option>
+                <option value=70>Luxembourgish</option>
+                <option value=71>Macedonian</option>
+                <option value=72>Malaysian</option>
+                <option value=73>Malian</option>
+                <option value=74>Mauritanian</option>
+                <option value=75>Mexican</option>
+                <option value=76>Moroccan</option>
+                <option value=77>Mozambican</option>
+                <option value=78>Namibian</option>
+                <option value=79>Native American</option>
+                <option value=80>New Zealander</option>
+                <option value=81>Nicaraguan</option>
+                <option value=82>Nigerian</option>
+                <option value=83>Norwegian</option>
+                <option value=84>Pakistani</option>
+                <option value=85>Palestinian</option>
+                <option value=86>Panamanian</option>
+                <option value=87>Paraguayan</option>
+                <option value=88>Peruvian</option>
+                <option value=89>Polish</option>
+                <option value=90>Portuguese</option>
+                <option value=91>Puerto Rican</option>
+                <option value=92>Romanian</option>
+                <option value=93>Russian</option>
+                <option value=94>Rwandan</option>
+                <option value=95>Sahrawi</option>
+                <option value=96>Saudi Arabian</option>
+                <option value=97>Scottish</option>
+                <option value=98>Senegalese</option>
+                <option value=99>Serbian</option>
+                <option value=100>Singaporean</option>
+                <option value=101>Slovak</option>
+                <option value=102>Slovenian</option>
+                <option value=103>South African</option>
+                <option value=104>Spanish</option>
+                <option value=105>Sudanese</option>
+                <option value=106>Swedish</option>
+                <option value=107>Swiss</option>
+                <option value=108>Syrian</option>
+                <option value=109>Taiwanese</option>
+                <option value=110>Tajik</option>
+                <option value=111>Tanzanian</option>
+                <option value=112>Thai</option>
+                <option value=113>Tunisian</option>
+                <option value=114>Turkish</option>
+                <option value=115>Ugandan</option>
+                <option value=116>Ukrainian</option>
+                <option value=117>Uruguayan</option>
+                <option value=118>Various</option>
+                <option value=119>Venezuelan</option>
+                <option value=120>Vietnamese</option>
+                <option value=121>Welsh</option>
+                <option value=122>Yugoslav</option>
+                <option value=123>Zimbabwean</option>
+            </select><br><br>
+
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="static/chartist.min.js"></script>
+            <script src="static/gender-chart.js"></script>
+    </div>
+</body>
+</html>
